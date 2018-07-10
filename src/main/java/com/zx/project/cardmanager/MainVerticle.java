@@ -10,6 +10,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Launcher;
 import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
+import io.vertx.reactivex.ext.web.handler.StaticHandler;
 import io.vertx.reactivex.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
 import org.slf4j.Logger;
@@ -40,6 +41,8 @@ public class MainVerticle extends RestfulApiVerticle {
     router.route().handler(BodyHandler.create());
     // Enable CORS.
     enableCorsSupport(router);
+
+
     initRedisServer().andThen(createHttpServer(router,
       config().getString("vert.http.host", HOST),
       config().getInteger("vert.http.port", PORT)))
@@ -55,6 +58,10 @@ public class MainVerticle extends RestfulApiVerticle {
       })
       .subscribe(() -> {
         router(router);
+
+        // Enable Static Handler
+        router.route("/*").handler(StaticHandler.create());
+
         System.out.println("Server listening at: http://localhost:8080/");
         startFuture.complete();
       }, startFuture::fail);
