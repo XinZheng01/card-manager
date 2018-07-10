@@ -1,0 +1,6 @@
+{
+  "vert.http.host":"0.0.0.0",
+  "vert.http.port":8080,
+  "vert.redis.host":"192.168.99.100",
+  "vert.redis.port":6379
+}

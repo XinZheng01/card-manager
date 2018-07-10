@@ -1,0 +1,17 @@
+# build files
+target
+*.iml
+*.ipr
+*.iws
+.mvn
+.idea
+.classpath
+.project
+.settings
+.DS_Store
+.vscode
+build
+lib_managed
+# runtime files
+node_modules
+.vertx

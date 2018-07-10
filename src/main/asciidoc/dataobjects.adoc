@@ -1,0 +1,69 @@
+= Cheatsheets
+
+[[Bank]]
+== Bank
+
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[code]]`code`|`String`|-
+|[[id]]`id`|`Number (int)`|-
+|[[name]]`name`|`String`|-
+|[[status]]`status`|`Number (int)`|-
+|===
+
+[[CreditCard]]
+== CreditCard
+
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[amount]]`amount`|`Number (Long)`|-
+|[[bankId]]`bankId`|`Number (int)`|-
+|[[billDate]]`billDate`|`Number (int)`|-
+|[[createDate]]`createDate`|`Number (Long)`|-
+|[[id]]`id`|`Number (int)`|-
+|[[name]]`name`|`String`|-
+|[[repaymentDate]]`repaymentDate`|`Number (int)`|-
+|[[tmpAmount]]`tmpAmount`|`Number (Long)`|-
+|[[tmpInvalidDate]]`tmpInvalidDate`|`Number (Long)`|-
+|[[uid]]`uid`|`Number (int)`|-
+|===
+
+[[Todo]]
+== Todo
+
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[completed]]`completed`|`Boolean`|-
+|[[id]]`id`|`Number (int)`|-
+|[[order]]`order`|`Number (Integer)`|-
+|[[title]]`title`|`String`|-
+|[[url]]`url`|`String`|-
+|===
+
+[[User]]
+== User
+
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[createTime]]`createTime`|`Number (Long)`|-
+|[[id]]`id`|`Number (int)`|-
+|[[lastLoginTime]]`lastLoginTime`|`Number (Long)`|-
+|[[mobile]]`mobile`|`String`|-
+|[[name]]`name`|`String`|-
+|[[password]]`password`|`String`|-
+|[[status]]`status`|`Number (int)`|-
+|[[wxOpenid]]`wxOpenid`|`String`|-
+|===
+
