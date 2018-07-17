@@ -34,7 +34,7 @@ public class CreditCardHandler extends BaseHandler {
     Single<List<CreditCard>> single = redisClient.rxHvals(REDIS_CREDIT_CARD_KEY)
       .map(arr -> arr.stream().map(s -> new CreditCard((String) s))
         .collect(Collectors.toList()));
-    sendResponse(context, single, Json::encode);
+    sendResponse(context, single);
   }
 
   public void findOne(RoutingContext context) {
@@ -46,7 +46,7 @@ public class CreditCardHandler extends BaseHandler {
     Maybe<CreditCard> maybe = redisClient.rxHget(REDIS_CREDIT_CARD_KEY, cardId)
       .toMaybe()
       .map(CreditCard::new);
-    sendResponse(context, maybe, Json::encode);
+    sendResponse(context, maybe);
   }
 
   public void add(RoutingContext context) {
@@ -60,7 +60,7 @@ public class CreditCardHandler extends BaseHandler {
       card.setId(id.intValue());
       return redisClient.rxHset(REDIS_CREDIT_CARD_KEY, String.valueOf(id), Json.encode(card));
     });
-    sendResponse(context, single, Json::encode);
+    sendResponse(context, single);
   }
 
   public void update(RoutingContext context) {
@@ -75,16 +75,23 @@ public class CreditCardHandler extends BaseHandler {
       .toMaybe()
       .map(s -> new CreditCard(s).merge(card))
       .flatMap(c -> redisClient.rxHset(REDIS_CREDIT_CARD_KEY, cardId, Json.encode(c)).flatMapMaybe(l -> Maybe.just(c)));
-    sendResponse(context, creditCardMaybe, Json::encode);
+    sendResponse(context, creditCardMaybe);
   }
 
   public void delete(RoutingContext context) {
-    sendResponse(context, redisClient.rxDel(REDIS_CREDIT_CARD_KEY).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxDel(REDIS_CREDIT_CARD_KEY).toCompletable());
   }
 
   public void deleteOne(RoutingContext context) {
     String cardId = context.request().getParam("cardId");
-    sendResponse(context, redisClient.rxHdel(REDIS_CREDIT_CARD_KEY, cardId).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxHdel(REDIS_CREDIT_CARD_KEY, cardId).toCompletable());
+  }
+
+  public void repaymentPlan(RoutingContext context) {
+    Single<List<CreditCard>> single = redisClient.rxHvals(REDIS_CREDIT_CARD_KEY)
+      .map(arr -> arr.stream().map(s -> new CreditCard((String) s))
+
+        .collect(Collectors.toList()));
   }
 
   /**

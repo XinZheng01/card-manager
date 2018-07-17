@@ -42,7 +42,6 @@ public class MainVerticle extends RestfulApiVerticle {
     // Enable CORS.
     enableCorsSupport(router);
 
-
     initRedisServer().andThen(createHttpServer(router,
       config().getString("vert.http.host", HOST),
       config().getInteger("vert.http.port", PORT)))

@@ -14,7 +14,7 @@
   <properties>
     <main.verticle>com.zx.project.cardmanager.MainVerticle</main.verticle>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <vertx.version>3.5.2</vertx.version>
+    <vertx.version>3.5.3</vertx.version>
     <log4j.version>2.8</log4j.version>
     <mysql.version>5.1.44</mysql.version>
     <jooq.generate.url></jooq.generate.url>
@@ -160,89 +160,89 @@
             </execution>
           </executions>
         </plugin>
-        <plugin>
-          <!-- Specify the maven code generator plugin -->
-          <groupId>org.jooq</groupId>
-          <artifactId>jooq-codegen-maven</artifactId>
-          <version>3.10.7</version>
-          <!-- The plugin should hook into the generate goal -->
-          <executions>
-            <execution>
-              <goals>
-                <goal>generate</goal>
-              </goals>
-            </execution>
-          </executions>
-          <dependencies>
-            <dependency>
-              <groupId>mysql</groupId>
-              <artifactId>mysql-connector-java</artifactId>
-              <version>${mysql.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>io.github.jklingsporn</groupId>
-              <artifactId>vertx-jooq-generate</artifactId>
-              <version>3.1.0</version>
-            </dependency>
-          </dependencies>
-          <!-- Specify the plugin configuration.
-               The configuration format is the same as for the standalone code generator -->
-          <configuration>
-            <!-- JDBC connection parameters -->
-            <jdbc>
-              <driver>com.mysql.jdbc.Driver</driver>
-              <url>${jooq.generate.url}</url>
-              <user>${jooq.generate.user}</user>
-              <password>${jooq.generate.password}</password>
-            </jdbc>
-            <!-- Generator parameters -->
-            <generator>
-              <name>io.github.jklingsporn.vertx.jooq.generate.VertxGenerator</name>
-              <!-- use 'io.github.jklingsporn.vertx.jooq.generate.rx.VertxGuiceRXGenerator' to enable Guice DI -->
-              <database>
-                <name>org.jooq.util.mysql.MySQLDatabase</name>
-                <includes>.*</includes>
-                <inputSchema>YOUR_INPUT_SCHEMA</inputSchema>
-                <outputSchema>YOUR_OUTPUT_SCHEMA</outputSchema>
-                <unsignedTypes>false</unsignedTypes>
-                <forcedTypes>
-                  <!-- Convert tinyint to boolean -->
-                  <forcedType>
-                    <name>BOOLEAN</name>
-                    <types>(?i:TINYINT)</types>
-                  </forcedType>
-                  <!-- Convert varchar column with name 'jsonObject' to a io.vertx.core.json.JsonObject-->
-                  <forcedType>
-                    <userType>io.vertx.core.json.JsonObject</userType>
-                    <converter>io.github.jklingsporn.vertx.jooq.shared.JsonObjectConverter</converter>
-                    <expression>jsonObject</expression>
-                    <types>.*</types>
-                  </forcedType>
-                  <!-- Convert varchar column with name 'jsonArray' to a io.vertx.core.json.JsonArray-->
-                  <forcedType>
-                    <userType>io.vertx.core.json.JsonArray</userType>
-                    <converter>io.github.jklingsporn.vertx.jooq.shared.JsonArrayConverter</converter>
-                    <expression>jsonArray</expression>
-                    <types>.*</types>
-                  </forcedType>
-                </forcedTypes>
-              </database>
-              <target>
-                <!-- This is where jOOQ will put your files -->
-                <packageName>YOUR_TARGET_PACKAGE_HERE</packageName>
-                <directory>YOUR_TARGET_DIRECTORY_HERE</directory>
-              </target>
-              <generate>
-                <interfaces>true</interfaces>
-                <!--<daos>true</daos>-->
-                <fluentSetters>true</fluentSetters>
-              </generate>
-              <strategy>
-                <name>io.github.jklingsporn.vertx.jooq.generate.rx.JDBCRXVertxGeneratorStrategy</name>
-              </strategy>
-            </generator>
-          </configuration>
-        </plugin>
+        <!--<plugin>-->
+          <!--&lt;!&ndash; Specify the maven code generator plugin &ndash;&gt;-->
+          <!--<groupId>org.jooq</groupId>-->
+          <!--<artifactId>jooq-codegen-maven</artifactId>-->
+          <!--<version>3.10.7</version>-->
+          <!--&lt;!&ndash; The plugin should hook into the generate goal &ndash;&gt;-->
+          <!--<executions>-->
+            <!--<execution>-->
+              <!--<goals>-->
+                <!--<goal>generate</goal>-->
+              <!--</goals>-->
+            <!--</execution>-->
+          <!--</executions>-->
+          <!--<dependencies>-->
+            <!--<dependency>-->
+              <!--<groupId>mysql</groupId>-->
+              <!--<artifactId>mysql-connector-java</artifactId>-->
+              <!--<version>${mysql.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+              <!--<groupId>io.github.jklingsporn</groupId>-->
+              <!--<artifactId>vertx-jooq-generate</artifactId>-->
+              <!--<version>3.1.0</version>-->
+            <!--</dependency>-->
+          <!--</dependencies>-->
+          <!--&lt;!&ndash; Specify the plugin configuration.-->
+               <!--The configuration format is the same as for the standalone code generator &ndash;&gt;-->
+          <!--<configuration>-->
+            <!--&lt;!&ndash; JDBC connection parameters &ndash;&gt;-->
+            <!--<jdbc>-->
+              <!--<driver>com.mysql.jdbc.Driver</driver>-->
+              <!--<url>${jooq.generate.url}</url>-->
+              <!--<user>${jooq.generate.user}</user>-->
+              <!--<password>${jooq.generate.password}</password>-->
+            <!--</jdbc>-->
+            <!--&lt;!&ndash; Generator parameters &ndash;&gt;-->
+            <!--<generator>-->
+              <!--<name>io.github.jklingsporn.vertx.jooq.generate.VertxGenerator</name>-->
+              <!--&lt;!&ndash; use 'io.github.jklingsporn.vertx.jooq.generate.rx.VertxGuiceRXGenerator' to enable Guice DI &ndash;&gt;-->
+              <!--<database>-->
+                <!--<name>org.jooq.util.mysql.MySQLDatabase</name>-->
+                <!--<includes>.*</includes>-->
+                <!--<inputSchema>YOUR_INPUT_SCHEMA</inputSchema>-->
+                <!--<outputSchema>YOUR_OUTPUT_SCHEMA</outputSchema>-->
+                <!--<unsignedTypes>false</unsignedTypes>-->
+                <!--<forcedTypes>-->
+                  <!--&lt;!&ndash; Convert tinyint to boolean &ndash;&gt;-->
+                  <!--<forcedType>-->
+                    <!--<name>BOOLEAN</name>-->
+                    <!--<types>(?i:TINYINT)</types>-->
+                  <!--</forcedType>-->
+                  <!--&lt;!&ndash; Convert varchar column with name 'jsonObject' to a io.vertx.core.json.JsonObject&ndash;&gt;-->
+                  <!--<forcedType>-->
+                    <!--<userType>io.vertx.core.json.JsonObject</userType>-->
+                    <!--<converter>io.github.jklingsporn.vertx.jooq.shared.JsonObjectConverter</converter>-->
+                    <!--<expression>jsonObject</expression>-->
+                    <!--<types>.*</types>-->
+                  <!--</forcedType>-->
+                  <!--&lt;!&ndash; Convert varchar column with name 'jsonArray' to a io.vertx.core.json.JsonArray&ndash;&gt;-->
+                  <!--<forcedType>-->
+                    <!--<userType>io.vertx.core.json.JsonArray</userType>-->
+                    <!--<converter>io.github.jklingsporn.vertx.jooq.shared.JsonArrayConverter</converter>-->
+                    <!--<expression>jsonArray</expression>-->
+                    <!--<types>.*</types>-->
+                  <!--</forcedType>-->
+                <!--</forcedTypes>-->
+              <!--</database>-->
+              <!--<target>-->
+                <!--&lt;!&ndash; This is where jOOQ will put your files &ndash;&gt;-->
+                <!--<packageName>YOUR_TARGET_PACKAGE_HERE</packageName>-->
+                <!--<directory>YOUR_TARGET_DIRECTORY_HERE</directory>-->
+              <!--</target>-->
+              <!--<generate>-->
+                <!--<interfaces>true</interfaces>-->
+                <!--&lt;!&ndash;<daos>true</daos>&ndash;&gt;-->
+                <!--<fluentSetters>true</fluentSetters>-->
+              <!--</generate>-->
+              <!--<strategy>-->
+                <!--<name>io.github.jklingsporn.vertx.jooq.generate.rx.JDBCRXVertxGeneratorStrategy</name>-->
+              <!--</strategy>-->
+            <!--</generator>-->
+          <!--</configuration>-->
+        <!--</plugin>-->
       </plugins>
     </pluginManagement>
     <!--<resources>-->

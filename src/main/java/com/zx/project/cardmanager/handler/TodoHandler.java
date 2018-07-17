@@ -44,7 +44,7 @@ public class TodoHandler extends BaseHandler {
         .map(o -> new Todo((String) o))
         .collect(Collectors.toList())
       );
-    sendResponse(context, single, Json::encode);
+    sendResponse(context, single);
   }
 
   /**
@@ -59,7 +59,7 @@ public class TodoHandler extends BaseHandler {
     }
     Maybe<Todo> maybe = redisClient.rxHget(REDIS_TODO_KEY, todoId)
       .toMaybe().map(Todo::new);
-    sendResponse(context, maybe, Json::encode);
+    sendResponse(context, maybe);
   }
 
   /**
@@ -79,7 +79,7 @@ public class TodoHandler extends BaseHandler {
         todo.setUrl(context.request().absoluteURI() + "/" + todo.getId());
         return redisClient.rxHset(REDIS_TODO_KEY, String.valueOf(todo.getId()), Json.encode(todo)).map(i -> todo);
       });
-    sendResponse(context, single, Json::encode, this::created);
+    sendResponse(context, single);
   }
 
   /**
@@ -99,7 +99,7 @@ public class TodoHandler extends BaseHandler {
         .toMaybe()
         .map(s -> new Todo(s).merge(todo))
         .flatMap(s -> redisClient.rxHset(REDIS_TODO_KEY, todoId, Json.encode(s)).flatMapMaybe(l -> Maybe.just(s)));
-      sendResponse(context, todoMaybe, Json::encode);
+      sendResponse(context, todoMaybe);
     } catch (Exception e) {
       badRequest(context, e);
     }
@@ -111,7 +111,7 @@ public class TodoHandler extends BaseHandler {
    * @param context
    */
   public void delete(RoutingContext context){
-    sendResponse(context, redisClient.rxDel(REDIS_TODO_KEY).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxDel(REDIS_TODO_KEY).toCompletable());
   }
 
   /**
@@ -120,7 +120,7 @@ public class TodoHandler extends BaseHandler {
    */
   public void deleteOne(RoutingContext context) {
     String todoId = context.request().getParam("todoId");
-    sendResponse(context, redisClient.rxHdel(REDIS_TODO_KEY, todoId).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxHdel(REDIS_TODO_KEY, todoId).toCompletable());
   }
 
   /**

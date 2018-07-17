@@ -47,7 +47,7 @@ public class UserHandler extends BaseHandler {
       .map(arr -> arr.stream()
         .map(s -> new User((String) s))
         .collect(Collectors.toList()));
-    sendResponse(context, single, Json::encode);
+    sendResponse(context, single);
   }
 
   public void findOne(RoutingContext context) {
@@ -58,7 +58,7 @@ public class UserHandler extends BaseHandler {
     }
     Maybe<User> maybe = redisClient.rxHget(REDIS_USER_KEY, userId)
       .toMaybe().map(User::new);
-    sendResponse(context, maybe, Json::encode);
+    sendResponse(context, maybe);
   }
 
   public void add(RoutingContext context) {
@@ -72,7 +72,7 @@ public class UserHandler extends BaseHandler {
       user.setId(l.intValue());
       return redisClient.rxHset(REDIS_USER_KEY, String.valueOf(l), Json.encode(user)).map(r -> user);
     });
-    sendResponse(context, single, Json::encode);
+    sendResponse(context, single);
   }
 
   public void update(RoutingContext context) {
@@ -87,16 +87,16 @@ public class UserHandler extends BaseHandler {
       .toMaybe()
       .map(s -> new User(s).merge(user))
       .flatMap(u -> redisClient.rxHset(REDIS_USER_KEY, userId, Json.encode(u)).flatMapMaybe(r -> Maybe.just(u)));
-    sendResponse(context, maybe, Json::encode);
+    sendResponse(context, maybe);
   }
 
   public void delete(RoutingContext context) {
-    sendResponse(context, redisClient.rxDel(REDIS_USER_KEY).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxDel(REDIS_USER_KEY).toCompletable());
   }
 
   public void deleteOne(RoutingContext context) {
     String userId = context.request().getParam("userId");
-    sendResponse(context, redisClient.rxHdel(REDIS_USER_KEY, userId).toCompletable(), this::noContent);
+    sendResponse(context, redisClient.rxHdel(REDIS_USER_KEY, userId).toCompletable());
   }
 
   /**

@@ -56,7 +56,7 @@ public class BankHandler extends BaseHandler {
       .map(arr -> arr.stream().map(o -> new Bank((String) o))
         .collect(Collectors.toList())
       );
-    sendResponse(context, listSingle, Json::encode);
+    sendResponse(context, listSingle);
   }
 
   public void findOne(RoutingContext context) {
@@ -68,7 +68,7 @@ public class BankHandler extends BaseHandler {
     Maybe<Bank> bankMaybe = redisClient.rxHget(REDIS_BANK_KEY, bankId)
       .toMaybe()
       .map(Bank::new);
-    sendResponse(context, bankMaybe, Json::encode);
+    sendResponse(context, bankMaybe);
   }
 
 }
